@@ -1,5 +1,8 @@
 # Live Link Face CSV Importer for Maya
 
+### My Modification
+Change timecode logic，except Apple LiveLinkFace App HH:MM:SS:Frame.MS format, the face blendshape csv can also write timecode as frame number 1,2,3,4,5,6...
+
 ### Instructions
 
 Simply move the CSVImporter.mll to your plug-ins folder. The path may vary depending on the environment variables setup on your machine. The default however is "C:/Users/Name/Documents/maya/Version/plug-ins", the most common alternative path would be "C:\Program Files\Autodesk\Maya2020\bin\plug-ins". If neither work check your environment variables for MAYA_PLUG_IN_PATH and adjust your path accordingly.
