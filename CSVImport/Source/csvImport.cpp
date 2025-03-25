@@ -9,6 +9,13 @@ int csvImport::get_frame(std::vector<std::string>::iterator time)
 {
 	// split the timecode
 	std::vector<std::string> out = find_frame(time);
+
+	// none-apple livelink face app format
+	if (out.size() == 1)
+	{
+		return std::stoi(out.at(0));
+	}
+
 	// get the frames
 	int output = std::stoi(out.at(3));
 	// get the seconds
@@ -30,7 +37,6 @@ std::vector<std::string> csvImport::find_frame(std::vector<std::string>::iterato
 	std::vector<std::string> out;
 	std::string token;
 	char delim = ':';
-
 	while (std::getline(ss, token, delim)) {
 		out.push_back(token);
 	}
