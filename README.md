@@ -1,7 +1,35 @@
 # Live Link Face CSV Importer for Maya
 
 ### My Modification
-Change timecode logic，except Apple LiveLinkFace App HH:MM:SS:Frame.MS format, the face blendshape csv can also write timecode as frame number 1,2,3,4,5,6...
+- CSVImport.vcxproj file
+    - when open this vcxproj file with Visual Studio 2022, you will see a window like image vcxproj_sln.jpg shows, and it will
+        - Automatic change \<WindowsTargetPlatformVersion\>
+        - Automatic change \<PlatformToolset\>
+    - For Debug|x64 and Release|x64
+        - Change \<IncludePath\> to your PC's path
+            - e.g. Original is "E:\maya_devkits\2022\devkitBase\include";
+            - My setting is "C:\Autodesk_Maya_2024_DEVKIT_Windows\devkitBase\include";
+            - Official DevKit download link: <https://aps.autodesk.com/developer/overview/maya>
+        - Change \<AdditionalIncludeDirectories\> as above, my path is "C:\Autodesk_Maya_2024_DEVKIT_Windows\devkitBase\include"
+        - Change \<AdditionalLibraryDirectories\>, my path is "C:\Program Files\Autodesk\Maya2024\lib;C:\Autodesk_Maya_2024_DEVKIT_Windows\devkitBase\lib"
+        - I removed \<PostBuildEvent\>'s command, so compiled mll will not be moved to another folder, I choose to copy my mll by myself
+- csvImport.cpp file
+    - In csvImport::get_frame function, after line 11
+    ```cpp
+    ...
+    std::vector<std::string> out = find_frame(time);
+    // below are my code
+    // none-apple livelink face app format
+	if (out.size() == 1)
+	{
+		return std::stoi(out.at(0));
+	}
+    // finish my code
+    // get the frames
+	int output = std::stoi(out.at(3));
+    ...
+    ```
+So I change timecode logic，after find_frame() function returns the timecode in csv file, except Apple LiveLinkFace App HH:MM:SS:Frame.MS format(like 07:44:57:02.944), the face blendshape csv can also write timecode as frame number 1,2,3,4,5,6..., so other face mocap applications (such as my developed project) can write their mocap data into this similar csv with simple interger frame, and can be imported to maya
 
 ### Instructions
 
